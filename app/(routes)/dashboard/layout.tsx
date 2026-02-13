@@ -4,6 +4,7 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex } from "convex/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import SideNav from "./_components/sideNav";
 
 const DashboardLayout = ({
   children,
@@ -27,7 +28,14 @@ const DashboardLayout = ({
       router.push("/teams/create");
     }
   };
-  return <div>{children}</div>;
+  return (
+    <div>
+      <div className="hidden md:block">
+        <SideNav />
+      </div>
+      <div className="md:ml-72">{children}</div>
+    </div>
+  );
 };
 
 export default DashboardLayout;
