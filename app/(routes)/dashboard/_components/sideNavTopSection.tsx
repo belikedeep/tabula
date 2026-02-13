@@ -4,10 +4,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import Image from "next/image";
 import Link from "next/link";
 
-const SideNavTopSection = () => {
+const SideNavTopSection = ({ user }: { user: any }) => {
   const menu = [
     // TODO: add icons from lucide react
     {
@@ -35,6 +37,7 @@ const SideNavTopSection = () => {
         <div>
           <h2>Team Name</h2>
         </div>
+        <Separator />
 
         {/* Menu Section */}
         <div>
@@ -46,6 +49,20 @@ const SideNavTopSection = () => {
           <LogoutLink>
             <p>Logout</p>
           </LogoutLink>
+        </div>
+        <Separator />
+
+        {/* User Info Section */}
+        <div>
+          {user?.picture && (
+            <Image
+              src={user.picture}
+              alt="user image"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+          )}
         </div>
       </PopoverContent>
     </Popover>
