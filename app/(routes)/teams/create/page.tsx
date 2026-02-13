@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -11,6 +12,7 @@ const CreateTeam = () => {
   const [teamName, setTeamName] = useState("");
   const createTeam = useMutation(api.teams.createTeam);
   const { user } = useKindeBrowserClient();
+  const router = useRouter();
 
   const createNewTeam = () => {
     createTeam({
@@ -19,6 +21,7 @@ const CreateTeam = () => {
     }).then((res) => {
       console.log(res);
       if (res) {
+        router.push("/dashboard");
         toast("Teams created successfully");
       }
     });
@@ -34,7 +37,12 @@ const CreateTeam = () => {
           onChange={(e) => setTeamName(e.target.value)}
           placeholder="Team Name"
         />
-        <Button disabled={!teamName && teamName?.length > 0}>Create</Button>
+        <Button
+          onClick={() => createNewTeam()}
+          disabled={!teamName && teamName?.length > 0}
+        >
+          Create
+        </Button>
       </div>
     </div>
   );
