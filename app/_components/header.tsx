@@ -1,8 +1,13 @@
+import {
+  RegisterLink,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
+
 const Header = () => {
   return (
     <div className="flex gap-10 justify-center">
-      <div>Login</div>
-      <div>Register</div>
+      <LoginLink>Login</LoginLink>
+      <RegisterLink>Register</RegisterLink>
     </div>
   );
 };
