@@ -4,8 +4,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import Link from "next/link";
 
 const SideNavTopSection = () => {
+  const menu = [
+    // TODO: add icons from lucide react
+    {
+      id: 1,
+      name: "Create Team",
+      path: "/teams/create",
+    },
+    {
+      id: 2,
+      name: "Settings",
+      path: "",
+    },
+  ];
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -15,7 +30,24 @@ const SideNavTopSection = () => {
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent>Hello World</PopoverContent>
+      <PopoverContent>
+        {/* Team Section */}
+        <div>
+          <h2>Team Name</h2>
+        </div>
+
+        {/* Menu Section */}
+        <div>
+          {menu.map((item) => (
+            <Link href={item.path} key={item.id}>
+              <p>{item.name}</p>
+            </Link>
+          ))}
+          <LogoutLink>
+            <p>Logout</p>
+          </LogoutLink>
+        </div>
+      </PopoverContent>
     </Popover>
   );
 };
