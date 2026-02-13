@@ -7,7 +7,7 @@ export const getUser = query({
   },
   handler: async (ctx, args) => {
     const result = await ctx.db
-      .query("users")
+      .query("user")
       .filter((q) => q.eq(q.field("email"), args.email))
       .collect();
     return result;
