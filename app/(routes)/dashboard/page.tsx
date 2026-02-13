@@ -6,7 +6,7 @@ import {
   LogoutLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { useEffect } from "react";
 
 const Dashboard = () => {
@@ -16,9 +16,20 @@ const Dashboard = () => {
     email: user?.email!,
   });
 
+  const createUser = useMutation(api.user.createUser);
+
   useEffect(() => {
     if (user) {
-      console.log(getUser);
+      // console.log(getUser);
+      if (getUser == undefined) {
+        createUser({
+          name: user.given_name || "",
+          email: user.email || "",
+          image: user.picture || "",
+        }).then((res) => {
+          console.log(res);
+        });
+      }
     }
   }, [user]);
   return (
