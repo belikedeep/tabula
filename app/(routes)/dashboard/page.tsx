@@ -21,7 +21,8 @@ const Dashboard = () => {
   useEffect(() => {
     if (user) {
       // console.log(getUser);
-      if (getUser == undefined) {
+      if (getUser === undefined) return;
+      if (getUser.length === 0) {
         createUser({
           name: user.given_name || "",
           email: user.email || "",
@@ -31,7 +32,7 @@ const Dashboard = () => {
         });
       }
     }
-  }, [user]);
+  }, [user, getUser]);
   return (
     <div>
       {JSON.stringify(getUser)}
