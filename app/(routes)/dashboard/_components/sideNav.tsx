@@ -1,3 +1,4 @@
+"use client";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import SideNavTopSection from "./sideNavTopSection";
 

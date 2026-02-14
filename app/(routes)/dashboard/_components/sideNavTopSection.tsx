@@ -5,9 +5,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { api } from "@/convex/_generated/api";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import { useConvex } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const SideNavTopSection = ({ user }: { user: any }) => {
   const menu = [
@@ -23,6 +26,20 @@ const SideNavTopSection = ({ user }: { user: any }) => {
       path: "",
     },
   ];
+
+  const convex = useConvex();
+
+  useEffect(() => {
+    user && getTeamList();
+  }, [user]);
+
+  const getTeamList = async () => {
+    const result = await convex.query(api.teams.getTeam, {
+      email: user?.email,
+    });
+    console.log("team List", result);
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -55,13 +72,21 @@ const SideNavTopSection = ({ user }: { user: any }) => {
         {/* User Info Section */}
         <div>
           {user?.picture && (
-            <Image
-              src={user.picture}
-              alt="user image"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
+            <div className="flex gap-2">
+              <Image
+                src={user.picture}
+                alt="user image"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
+              <div>
+                <h2>
+                  {user.given_name} {user.family_name}
+                </h2>
+                <h2>{user.email}</h2>
+              </div>
+            </div>
           )}
         </div>
       </PopoverContent>
