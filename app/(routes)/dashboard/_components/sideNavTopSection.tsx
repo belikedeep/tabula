@@ -8,11 +8,35 @@ import { Separator } from "@/components/ui/separator";
 import { api } from "@/convex/_generated/api";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex } from "convex/react";
+import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+export interface TEAM {
+  createdBy: string;
+  teamName: string;
+  _id: string;
+}
 
 const SideNavTopSection = ({ user }: { user: any }) => {
+  const [activeTeam, setActiveTeam] = useState<TEAM>();
+  const [teamList, setTeamList] = useState<TEAM[]>();
+  const convex = useConvex();
+
+  useEffect(() => {
+    user && getTeamList();
+  }, [user]);
+
+  const getTeamList = async () => {
+    const result = await convex.query(api.teams.getTeam, {
+      email: user?.email,
+    });
+    console.log("team List", result);
+    setTeamList(result);
+    setActiveTeam(result[0]);
+  };
+
   const menu = [
     // TODO: add icons from lucide react
     {
@@ -27,32 +51,38 @@ const SideNavTopSection = ({ user }: { user: any }) => {
     },
   ];
 
-  const convex = useConvex();
-
-  useEffect(() => {
-    user && getTeamList();
-  }, [user]);
-
-  const getTeamList = async () => {
-    const result = await convex.query(api.teams.getTeam, {
-      email: user?.email,
-    });
-    console.log("team List", result);
-  };
-
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline">
           <div className="flex items-center gap-3 p-3 hover:bg-gray-200 m-3 cursor-pointer">
-            <h2>Team Name</h2>
+            {/* <Image
+              src="/logo.svg"
+              alt="logo"
+              width={30}
+              height={30}
+              className="rounded"
+            /> */}
+            <h2>{activeTeam?.teamName}</h2>
+            <ArrowDown />
           </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         {/* Team Section */}
         <div>
-          <h2>Team Name</h2>
+          {/* <h2>Team Name</h2> */}
+          {teamList?.map((team: TEAM, index) => {
+            return (
+              <h2
+                className="p-2 m-1 hover:bg-blue-500 hover:text-white rounded-lg cursor-pointer"
+                key={team._id}
+                onClick={() => setActiveTeam(team)}
+              >
+                {team.teamName}
+              </h2>
+            );
+          })}
         </div>
         <Separator />
 
