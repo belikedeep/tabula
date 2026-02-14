@@ -89,6 +89,7 @@ const SideNavTopSection = ({ user }: { user: any }) => {
         {/* Menu Section */}
         <div>
           {menu.map((item) => (
+            // TODO: can add custom method to handle menu items
             <Link href={item.path} key={item.id}>
               <p>{item.name}</p>
             </Link>
