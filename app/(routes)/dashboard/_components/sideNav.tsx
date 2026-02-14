@@ -6,13 +6,17 @@ import SideNavBottomSection from "./sideNavBottomSection";
 const SideNav = () => {
   const { user } = useKindeBrowserClient();
 
+  const onFileCreate = (fileName: string) => {
+    console.log(fileName);
+  };
+
   return (
     <div className="flex flex-col bg-gray-300 h-screen fixed w-72 border-r border-gray-200">
       <div className="flex-1">
         <SideNavTopSection user={user} />
       </div>
       <div className=" ">
-        <SideNavBottomSection />
+        <SideNavBottomSection onFileCreate={onFileCreate} />
       </div>
     </div>
   );

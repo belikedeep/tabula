@@ -1,7 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Flag } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
-const SideNavBottomSection = () => {
+const SideNavBottomSection = ({ onFileCreate }: any) => {
+  const [fileInput, setFileInput] = useState("");
+
   const menuList = [
     {
       id: 1,
@@ -32,7 +46,34 @@ const SideNavBottomSection = () => {
       ))}
 
       {/* Add new file button */}
-      <Button className="w-full">New File</Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className="w-full">New File</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create a New file</DialogTitle>
+            <DialogDescription>
+              <Input
+                onChange={(e) => setFileInput(e.target.value)}
+                placeholder="Enter file name"
+              />
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              {/* TODO can add lenth condition as well */}
+              <Button
+                disabled={!fileInput}
+                type="button"
+                onClick={() => onFileCreate(fileInput)}
+              >
+                Create
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Progress Bar */}
       <div className="h-4 w-full bg-gray-200 rounded-full mt-5">
