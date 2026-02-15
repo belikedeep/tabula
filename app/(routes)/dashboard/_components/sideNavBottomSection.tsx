@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-const SideNavBottomSection = ({ onFileCreate }: any) => {
+const SideNavBottomSection = ({ onFileCreate, totalFiles }: any) => {
   const [fileInput, setFileInput] = useState("");
 
   const menuList = [
@@ -77,10 +77,13 @@ const SideNavBottomSection = ({ onFileCreate }: any) => {
 
       {/* Progress Bar */}
       <div className="h-4 w-full bg-gray-200 rounded-full mt-5">
-        <div className={`h-4 bg-primary rounded-full w-[40%]`}></div>
+        <div
+          className="h-4 bg-primary rounded-full"
+          style={{ width: `${(totalFiles / 5) * 100}%` }}
+        ></div>
       </div>
 
-      <h2>1 out of 5 files used</h2>
+      <h2>{totalFiles} out of 5 files used</h2>
       <h2>Upgrade your plan for unlimited access </h2>
     </div>
   );
