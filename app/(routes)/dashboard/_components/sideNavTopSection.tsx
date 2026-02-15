@@ -19,7 +19,7 @@ export interface TEAM {
   _id: string;
 }
 
-const SideNavTopSection = ({ user }: { user: any }) => {
+const SideNavTopSection = ({ user, setActiveTeamInfo }: any) => {
   const [activeTeam, setActiveTeam] = useState<TEAM>();
   const [teamList, setTeamList] = useState<TEAM[]>();
   const convex = useConvex();
@@ -27,6 +27,10 @@ const SideNavTopSection = ({ user }: { user: any }) => {
   useEffect(() => {
     user && getTeamList();
   }, [user]);
+
+  useEffect(() => {
+    activeTeam && setActiveTeamInfo(activeTeam);
+  }, [activeTeam]);
 
   const getTeamList = async () => {
     const result = await convex.query(api.teams.getTeam, {

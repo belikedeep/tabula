@@ -1,19 +1,41 @@
 "use client";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import SideNavTopSection from "./sideNavTopSection";
+import SideNavTopSection, { TEAM } from "./sideNavTopSection";
 import SideNavBottomSection from "./sideNavBottomSection";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const SideNav = () => {
   const { user } = useKindeBrowserClient();
+  const createFile = useMutation(api.files.createFile);
+  const [activeTeam, setActiveTeam] = useState<TEAM>();
 
   const onFileCreate = (fileName: string) => {
     console.log(fileName);
+    createFile({
+      fileName: fileName,
+      teamId: activeTeam?._id as string,
+      createdBy: user?.email as string,
+    })
+      .then((res) => {
+        if (res) {
+          toast("file created successfully");
+        }
+      })
+      .catch((e) => {
+        toast("Error while creating file");
+      });
   };
 
   return (
     <div className="flex flex-col bg-gray-300 h-screen fixed w-72 border-r border-gray-200">
       <div className="flex-1">
-        <SideNavTopSection user={user} />
+        <SideNavTopSection
+          user={user}
+          setActiveTeamInfo={(activeTeam: TEAM) => setActiveTeam(activeTeam)}
+        />
       </div>
       <div className=" ">
         <SideNavBottomSection onFileCreate={onFileCreate} />
