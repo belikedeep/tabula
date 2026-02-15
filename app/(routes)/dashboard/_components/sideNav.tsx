@@ -18,6 +18,9 @@ const SideNav = () => {
       fileName: fileName,
       teamId: activeTeam?._id as string,
       createdBy: user?.email as string,
+      archive: false,
+      document: "",
+      whiteboard: "",
     })
       .then((res) => {
         if (res) {
