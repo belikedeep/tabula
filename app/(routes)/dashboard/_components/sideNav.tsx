@@ -30,6 +30,7 @@ const SideNav = () => {
     })
       .then((res) => {
         if (res) {
+          getFiles();
           toast("file created successfully");
         }
       })
