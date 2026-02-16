@@ -12,18 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-const FileList = () => {
-  interface FILE {
-    _id: string;
-    fileName: string;
-    teamId: string;
-    createdBy: string;
-    _creationTime: number;
-    archive: boolean;
-    document: string;
-    whiteboard: string;
-  }
+export interface FILE {
+  _id: string;
+  fileName: string;
+  teamId: string;
+  createdBy: string;
+  _creationTime: number;
+  archive: boolean;
+  document: string;
+  whiteboard: string;
+}
 
+const FileList = () => {
   const { fileList_ } = useContext(fileListContext);
   const [fileList, setFileList] = useState<FILE[]>([]);
   const { user } = useKindeBrowserClient();

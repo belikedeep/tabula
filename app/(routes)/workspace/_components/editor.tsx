@@ -5,6 +5,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { toast } from "sonner";
+import { FILE } from "../../dashboard/_components/fileList";
 
 const rawDocument = {
   time: 1550476186479,
@@ -32,9 +33,11 @@ const rawDocument = {
 const Editor = ({
   onSaveTrigger,
   fileId,
+  fileData,
 }: {
   onSaveTrigger: any;
   fileId: Id<"files">;
+  fileData: FILE;
 }) => {
   const ref = useRef<EditorJS | null>(null);
   const updateDocument = useMutation(api.files.updateDocument);
