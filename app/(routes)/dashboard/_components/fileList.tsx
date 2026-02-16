@@ -7,12 +7,10 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 const FileList = () => {
   interface FILE {
@@ -29,6 +27,7 @@ const FileList = () => {
   const { fileList_ } = useContext(fileListContext);
   const [fileList, setFileList] = useState<FILE[]>([]);
   const { user } = useKindeBrowserClient();
+  const router = useRouter();
 
   useEffect(() => {
     fileList_ && setFileList(fileList_);
@@ -58,7 +57,11 @@ const FileList = () => {
           <tbody className="divide-y divide-gray-200">
             {fileList &&
               fileList.map((file: FILE, index: number) => (
-                <tr key={index} className="odd:bg-gray-50">
+                <tr
+                  key={index}
+                  className="odd:bg-gray-50 cursor-pointer hover:bg-gray-100"
+                  onClick={() => router.push(`/workspace/${file._id}`)}
+                >
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                     {file.fileName}
                   </td>
