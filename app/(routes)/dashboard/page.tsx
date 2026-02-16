@@ -9,6 +9,7 @@ import {
 import { useConvex, useMutation, useQuery } from "convex/react";
 import { useEffect } from "react";
 import { Header } from "./_components/header";
+import FileList from "./_components/fileList";
 
 const Dashboard = () => {
   const convex = useConvex();
@@ -45,6 +46,7 @@ const Dashboard = () => {
   return (
     <div>
       <Header />
+      <FileList />
     </div>
   );
 };
