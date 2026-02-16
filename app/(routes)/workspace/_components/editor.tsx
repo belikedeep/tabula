@@ -44,8 +44,8 @@ const Editor = ({
   const [document, setDocument] = useState(rawDocument);
 
   useEffect(() => {
-    initEditor();
-  }, []);
+    fileData && initEditor();
+  }, [fileData]);
 
   useEffect(() => {
     console.log("onSaveTrigger", onSaveTrigger);
