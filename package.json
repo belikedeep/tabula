@@ -12,6 +12,7 @@
     "@editorjs/editorjs": "^2.31.2",
     "@editorjs/header": "^2.8.8",
     "@editorjs/list": "^2.0.9",
+    "@excalidraw/excalidraw": "^0.18.0",
     "@kinde-oss/kinde-auth-nextjs": "^2.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
