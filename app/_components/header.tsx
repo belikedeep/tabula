@@ -9,7 +9,7 @@ const Header = () => {
     <div className="w-full border-b-2 border-foreground bg-background py-4">
       <div className="container mx-auto flex items-center justify-between px-4">
         <div className="flex items-center gap-8">
-          <h1 className="text-2xl font-black tracking-tighter uppercase select-none">
+          <h1 className="text-2xl font-semibold tracking-tighter uppercase select-none">
             Tabula
           </h1>
           <div className="hidden md:flex gap-6">
