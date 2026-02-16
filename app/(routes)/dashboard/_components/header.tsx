@@ -11,7 +11,9 @@ export const Header = () => {
                 <Input placeholder="Search" type="text" />
             </div>
             <div>
-                <Image src={user?.picture || ""} alt="user image" width={30} height={30} className="rounded-full" />
+                {user?.picture ? (
+                    <Image src={user?.picture} alt="user image" width={30} height={30} className="rounded-full" />
+                ) : null}
             </div>
             <div>
                 <Button >Invite</Button>

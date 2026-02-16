@@ -13,6 +13,11 @@ const SideNav = () => {
   const [activeTeam, setActiveTeam] = useState<TEAM>();
   const convex = useConvex();
   const [totalFiles, setTotalFiles] = useState<number>(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     activeTeam && getFiles();
@@ -51,16 +56,20 @@ const SideNav = () => {
   return (
     <div className="flex flex-col bg-gray-300 h-screen fixed w-72 border-r border-gray-200">
       <div className="flex-1">
-        <SideNavTopSection
-          user={user}
-          setActiveTeamInfo={(activeTeam: TEAM) => setActiveTeam(activeTeam)}
-        />
+        {mounted && (
+          <SideNavTopSection
+            user={user}
+            setActiveTeamInfo={(activeTeam: TEAM) => setActiveTeam(activeTeam)}
+          />
+        )}
       </div>
       <div className=" ">
-        <SideNavBottomSection
-          totalFiles={totalFiles}
-          onFileCreate={onFileCreate}
-        />
+        {mounted && (
+          <SideNavBottomSection
+            totalFiles={totalFiles}
+            onFileCreate={onFileCreate}
+          />
+        )}
       </div>
     </div>
   );
