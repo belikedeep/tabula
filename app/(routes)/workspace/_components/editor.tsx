@@ -1,29 +1,65 @@
 "use client";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import EditorjsList from "@editorjs/list";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+// Since we're using dynamic imports for the implementation, we only import the type here.
+// Use 'import type' to ensure no runtime code is bundled from this import.
+import type EditorJS from "@editorjs/editorjs";
+
+const rawDocument = {
+  time: 1550476186479,
+  blocks: [
+    {
+      data: {
+        text: "Document Name",
+        level: 2,
+      },
+      id: "1",
+      type: "header",
+    },
+    //TODO: not working lookinto it
+    // {
+    //   data: {
+    //     level: 4,
+    //   },
+    //   id: "2",
+    //   type: "header",
+    // },
+  ],
+  version: "2.8.1",
+};
 
 const Editor = () => {
-  const initEditor = () => {
-    const editor = new EditorJS({
-      holder: "editorjs",
-      tools: {
-        //TODO: Add more tools and properties
-        //TODO: can add some for premium users
-        header: Header,
-        List: {
-          class: EditorjsList,
-          inlineToolbar: true,
-          config: {
-            defaultStyle: "unordered",
-          },
-        },
-      },
-    });
-  };
+  const ref = useRef<EditorJS | null>(null);
+  const [document, setDocument] = useState(rawDocument);
 
   useEffect(() => {
+    const initEditor = async () => {
+      const EditorJS = (await import("@editorjs/editorjs")).default;
+      const Header = (await import("@editorjs/header")).default;
+      // @ts-ignore
+      const EditorjsList = (await import("@editorjs/list")).default;
+
+      if (!ref.current) {
+        const editor = new EditorJS({
+          holder: "editorjs",
+          data: document,
+          tools: {
+            //TODO: Add more tools and properties
+            //TODO: can add some only for premium users
+            //TODO: can add some only for free users
+            header: Header,
+            List: {
+              class: EditorjsList,
+              inlineToolbar: true,
+              config: {
+                defaultStyle: "unordered",
+              },
+            },
+          },
+        });
+        ref.current = editor;
+      }
+    };
+
     initEditor();
   }, []);
 
