@@ -1,5 +1,11 @@
-const Workspace = () => {
-  return <div>Workspace</div>;
+import WorkspaceHeader from "../_components/workspaceHeader";
+
+const WorkspacePage = () => {
+  return (
+    <div>
+      <WorkspaceHeader />
+    </div>
+  );
 };
 
-export default Workspace;
+export default WorkspacePage;
