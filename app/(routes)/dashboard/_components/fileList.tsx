@@ -1,53 +1,49 @@
+import { fileListContext } from "@/app/_context/fileListContext"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react"
 
 const FileList = () => {
+
+    const { fileList_ } = useContext(fileListContext);
+    const [fileList, setFileList] = useState<any>([]);
+    const { user } = useKindeBrowserClient();
+
+    useEffect(() => {
+        fileList_ && setFileList(fileList_);
+    }, [fileList_]);
+
     return (
         <div className="mt-10">
             <div className="overflow-x-auto">
-                <table className="min-w-full divide-y-2 divide-gray-200">
+                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right">
-                        <tr className="*:font-medium *:text-gray-900">
-                            <th className="px-3 py-2 whitespace-nowrap">Name</th>
-                            <th className="px-3 py-2 whitespace-nowrap">DoB</th>
-                            <th className="px-3 py-2 whitespace-nowrap">Role</th>
-                            <th className="px-3 py-2 whitespace-nowrap">Salary</th>
+                        <tr>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">File Name</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Created At</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Created By</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Author</th>
                         </tr>
                     </thead>
 
                     <tbody className="divide-y divide-gray-200">
-                        <tr className="*:text-gray-900 *:first:font-medium">
-                            <td className="px-3 py-2 whitespace-nowrap">Nandor the Relentless</td>
-                            <td className="px-3 py-2 whitespace-nowrap">04/06/1262</td>
-                            <td className="px-3 py-2 whitespace-nowrap">Vampire Warrior</td>
-                            <td className="px-3 py-2 whitespace-nowrap">$0</td>
-                        </tr>
-
-                        <tr className="*:text-gray-900 *:first:font-medium">
-                            <td className="px-3 py-2 whitespace-nowrap">Laszlo Cravensworth</td>
-                            <td className="px-3 py-2 whitespace-nowrap">19/10/1678</td>
-                            <td className="px-3 py-2 whitespace-nowrap">Vampire Gentleman</td>
-                            <td className="px-3 py-2 whitespace-nowrap">$0</td>
-                        </tr>
-
-                        <tr className="*:text-gray-900 *:first:font-medium">
-                            <td className="px-3 py-2 whitespace-nowrap">Nadja</td>
-                            <td className="px-3 py-2 whitespace-nowrap">15/03/1593</td>
-                            <td className="px-3 py-2 whitespace-nowrap">Vampire Seductress</td>
-                            <td className="px-3 py-2 whitespace-nowrap">$0</td>
-                        </tr>
-
-                        <tr className="*:text-gray-900 *:first:font-medium">
-                            <td className="px-3 py-2 whitespace-nowrap">Colin Robinson</td>
-                            <td className="px-3 py-2 whitespace-nowrap">01/09/1971</td>
-                            <td className="px-3 py-2 whitespace-nowrap">Energy Vampire</td>
-                            <td className="px-3 py-2 whitespace-nowrap">$53,000</td>
-                        </tr>
-
-                        <tr className="*:text-gray-900 *:first:font-medium">
-                            <td className="px-3 py-2 whitespace-nowrap">Guillermo de la Cruz</td>
-                            <td className="px-3 py-2 whitespace-nowrap">18/11/1991</td>
-                            <td className="px-3 py-2 whitespace-nowrap">Familiar/Vampire Hunter</td>
-                            <td className="px-3 py-2 whitespace-nowrap">$0</td>
-                        </tr>
+                        {fileList && fileList.map((file: any, index: number) => (
+                            <tr key={index} className="odd:bg-gray-50">
+                                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    {file.fileName}
+                                </td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {new Date(file._creationTime).toLocaleDateString()}
+                                </td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {file.createdBy}
+                                </td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {/* Placeholder for user image if available, or just email/name again */}
+                                    {user?.picture ? <Image src={user?.picture} alt="user" className="w-8 h-8 rounded-full" width={30} height={30} /> : <Image src="/user.png" alt="user" className="w-8 h-8 rounded-full" width={30} height={30} />}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
