@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-// Since we're using dynamic imports for the implementation, we only import the type here.
-// Use 'import type' to ensure no runtime code is bundled from this import.
 import type EditorJS from "@editorjs/editorjs";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 const rawDocument = {
   time: 1550476186479,
@@ -27,8 +28,15 @@ const rawDocument = {
   version: "2.8.1",
 };
 // TODO: can be refactored, onSaveTrigger is not boolean??
-const Editor = ({ onSaveTrigger }: { onSaveTrigger: any }) => {
+const Editor = ({
+  onSaveTrigger,
+  fileId,
+}: {
+  onSaveTrigger: any;
+  fileId: Id<"files">;
+}) => {
   const ref = useRef<EditorJS | null>(null);
+  const updateDocument = useMutation(api.files.updateDocument);
   const [document, setDocument] = useState(rawDocument);
 
   useEffect(() => {
@@ -74,6 +82,10 @@ const Editor = ({ onSaveTrigger }: { onSaveTrigger: any }) => {
         .save()
         .then((outputData) => {
           console.log("Article data: ", outputData);
+          updateDocument({
+            _id: fileId,
+            document: JSON.stringify(outputData),
+          });
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
