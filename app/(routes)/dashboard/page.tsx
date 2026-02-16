@@ -8,6 +8,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs";
 import { useConvex, useMutation, useQuery } from "convex/react";
 import { useEffect } from "react";
+import { Header } from "./_components/header";
 
 const Dashboard = () => {
   const convex = useConvex();
@@ -43,10 +44,7 @@ const Dashboard = () => {
   };
   return (
     <div>
-      Dashboard
-      <Button>
-        <LogoutLink>Logout</LogoutLink>
-      </Button>
+      <Header />
     </div>
   );
 };

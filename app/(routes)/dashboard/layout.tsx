@@ -30,7 +30,7 @@ const DashboardLayout = ({
   };
   return (
     <div>
-      <div className="hidden md:block">
+      <div className="hidden md:block h-screen w-72 fixed">
         <SideNav />
       </div>
       <div className="md:ml-72">{children}</div>
