@@ -61,7 +61,7 @@ const Editor = ({
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editorjs",
-        data: document,
+        data: fileData?.document ? JSON.parse(fileData.document) : document,
         tools: {
           //TODO: Add more tools and properties
           //TODO: can add some only for premium users

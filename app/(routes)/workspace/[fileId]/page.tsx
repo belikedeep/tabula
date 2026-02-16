@@ -15,7 +15,7 @@ const WorkspacePage = ({
   const { fileId } = use(params);
   const [triggerSave, setTriggerSave] = useState(false);
   const convex = useConvex();
-  const [fileData, setFileData] = useState<FILE>();
+  const [fileData, setFileData] = useState<FILE | any>();
 
   useEffect(() => {
     getFileData();
@@ -37,11 +37,13 @@ const WorkspacePage = ({
       <div className="grid grid-cols-1 md:grid-cols-2">
         {/* document */}
         <div className="h-screen">
-          <Editor
-            onSaveTrigger={triggerSave}
-            fileId={fileId}
-            fileData={fileData}
-          />
+          {fileData && (
+            <Editor
+              onSaveTrigger={triggerSave}
+              fileId={fileId}
+              fileData={fileData}
+            />
+          )}
         </div>
         {/* canvas */}
         <div className="bg-red-400 h-screen">Canvas</div>
