@@ -26,42 +26,46 @@ const rawDocument = {
   ],
   version: "2.8.1",
 };
-
-const Editor = () => {
+// TODO: can be refactored, onSaveTrigger is not boolean??
+const Editor = ({ onSaveTrigger }: { onSaveTrigger: any }) => {
   const ref = useRef<EditorJS | null>(null);
   const [document, setDocument] = useState(rawDocument);
 
   useEffect(() => {
-    const initEditor = async () => {
-      const EditorJS = (await import("@editorjs/editorjs")).default;
-      const Header = (await import("@editorjs/header")).default;
-      // @ts-ignore
-      const EditorjsList = (await import("@editorjs/list")).default;
+    console.log("onSaveTrigger", onSaveTrigger);
+  }, [onSaveTrigger]);
 
-      if (!ref.current) {
-        const editor = new EditorJS({
-          holder: "editorjs",
-          data: document,
-          tools: {
-            //TODO: Add more tools and properties
-            //TODO: can add some only for premium users
-            //TODO: can add some only for free users
-            header: Header,
-            List: {
-              class: EditorjsList,
-              inlineToolbar: true,
-              config: {
-                defaultStyle: "unordered",
-              },
-            },
-          },
-        });
-        ref.current = editor;
-      }
-    };
-
+  useEffect(() => {
     initEditor();
   }, []);
+
+  const initEditor = async () => {
+    const EditorJS = (await import("@editorjs/editorjs")).default;
+    const Header = (await import("@editorjs/header")).default;
+    // @ts-ignore
+    const EditorjsList = (await import("@editorjs/list")).default;
+
+    if (!ref.current) {
+      const editor = new EditorJS({
+        holder: "editorjs",
+        data: document,
+        tools: {
+          //TODO: Add more tools and properties
+          //TODO: can add some only for premium users
+          //TODO: can add some only for free users
+          header: Header,
+          List: {
+            class: EditorjsList,
+            inlineToolbar: true,
+            config: {
+              defaultStyle: "unordered",
+            },
+          },
+        },
+      });
+      ref.current = editor;
+    }
+  };
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const WorkspaceHeader = () => {
+const WorkspaceHeader = ({ onSave }: any) => {
   return (
     <div className="p-3 border-b flex justify-between items-center">
       <div className="flex gap-5 items-center">
@@ -8,7 +8,10 @@ const WorkspaceHeader = () => {
         <div>File Name</div>
       </div>
       <div>
-        <Button>Export/Share</Button>
+        <div className="flex gap-2">
+          <Button onClick={() => onSave()}>Save</Button>
+          <Button>Export/Share</Button>
+        </div>
       </div>
     </div>
   );
