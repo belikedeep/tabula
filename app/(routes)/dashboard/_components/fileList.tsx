@@ -5,8 +5,19 @@ import { useContext, useEffect, useState } from "react"
 
 const FileList = () => {
 
+    interface FILE {
+        _id: string;
+        fileName: string;
+        teamId: string;
+        createdBy: string;
+        _creationTime: number;
+        archive: boolean;
+        document: string;
+        whiteboard: string;
+    }
+
     const { fileList_ } = useContext(fileListContext);
-    const [fileList, setFileList] = useState<any>([]);
+    const [fileList, setFileList] = useState<FILE[]>([]);
     const { user } = useKindeBrowserClient();
 
     useEffect(() => {
@@ -27,7 +38,7 @@ const FileList = () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-200">
-                        {fileList && fileList.map((file: any, index: number) => (
+                        {fileList && fileList.map((file: FILE, index: number) => (
                             <tr key={index} className="odd:bg-gray-50">
                                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {file.fileName}
