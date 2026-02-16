@@ -4,6 +4,7 @@ import type EditorJS from "@editorjs/editorjs";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { toast } from "sonner";
 
 const rawDocument = {
   time: 1550476186479,
@@ -85,7 +86,15 @@ const Editor = ({
           updateDocument({
             _id: fileId,
             document: JSON.stringify(outputData),
-          });
+          }).then(
+            (res) => {
+              // TODO: very slow
+              toast("Document saved successfully");
+            },
+            (e) => {
+              toast("Server error");
+            },
+          );
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
