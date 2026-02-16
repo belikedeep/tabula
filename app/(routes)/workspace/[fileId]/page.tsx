@@ -6,6 +6,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useConvex } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { FILE } from "../../dashboard/_components/fileList";
+import Canvas from "../_components/canvas";
 
 const WorkspacePage = ({
   params,
@@ -46,7 +47,9 @@ const WorkspacePage = ({
           )}
         </div>
         {/* canvas */}
-        <div className="bg-red-400 h-screen">Canvas</div>
+        <div className=" h-screen">
+          <Canvas />
+        </div>
       </div>
     </div>
   );
