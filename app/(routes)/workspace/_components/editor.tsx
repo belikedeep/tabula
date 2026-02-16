@@ -32,12 +32,13 @@ const Editor = ({ onSaveTrigger }: { onSaveTrigger: any }) => {
   const [document, setDocument] = useState(rawDocument);
 
   useEffect(() => {
-    console.log("onSaveTrigger", onSaveTrigger);
-  }, [onSaveTrigger]);
-
-  useEffect(() => {
     initEditor();
   }, []);
+
+  useEffect(() => {
+    console.log("onSaveTrigger", onSaveTrigger);
+    onSaveDocument();
+  }, [onSaveTrigger]);
 
   const initEditor = async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -64,6 +65,19 @@ const Editor = ({ onSaveTrigger }: { onSaveTrigger: any }) => {
         },
       });
       ref.current = editor;
+    }
+  };
+
+  const onSaveDocument = () => {
+    if (ref.current) {
+      ref.current
+        .save()
+        .then((outputData) => {
+          console.log("Article data: ", outputData);
+        })
+        .catch((error) => {
+          console.log("Saving failed: ", error);
+        });
     }
   };
 
