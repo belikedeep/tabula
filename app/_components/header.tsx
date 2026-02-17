@@ -1,8 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -29,12 +26,12 @@ const Header = () => {
         </div>
 
         <div className="flex gap-4 uppercase">
-          <LoginLink>
+          <Link href="/login">
             <Button className="bg-red-500">Login</Button>
-          </LoginLink>
-          <RegisterLink>
+          </Link>
+          <Link href="/register">
             <Button className="">Register</Button>
-          </RegisterLink>
+          </Link>
         </div>
       </div>
     </div>
