@@ -14,19 +14,16 @@ const SideNav = () => {
   const [activeTeam, setActiveTeam] = useState<TEAM>();
   const convex = useConvex();
   const [totalFiles, setTotalFiles] = useState<number>(0);
-  const [mounted, setMounted] = useState(false);
-  const { fileList_, setFileList_ } = useContext(fileListContext)
+  const { setFileList_ } = useContext(fileListContext);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    activeTeam && getFiles();
+    if (activeTeam) {
+      getFiles();
+    }
   }, [activeTeam]);
 
   const onFileCreate = (fileName: string) => {
-    console.log(fileName);
+    // console.log(fileName);
     createFile({
       fileName: fileName,
       teamId: activeTeam?._id as string,
@@ -38,7 +35,7 @@ const SideNav = () => {
       .then((res) => {
         if (res) {
           getFiles();
-          toast("file created successfully");
+          toast("File created successfully");
         }
       })
       .catch((e) => {
@@ -51,28 +48,25 @@ const SideNav = () => {
     const result = await convex.query(api.files.getFiles, {
       teamId: activeTeam._id,
     });
-    console.log(result);
+    // console.log(result);
     setFileList_(result);
     setTotalFiles(result.length);
   };
 
   return (
-    <div className="flex flex-col bg-gray-300 h-screen fixed w-72 border-r border-gray-200">
-      <div className="flex-1">
-        {mounted && (
-          <SideNavTopSection
-            user={user}
-            setActiveTeamInfo={(activeTeam: TEAM) => setActiveTeam(activeTeam)}
-          />
-        )}
+    <div className="flex flex-col h-screen overflow-hidden p-6 gap-4">
+      <div className="flex-1 flex flex-col min-h-0">
+        <SideNavTopSection
+          user={user}
+          setActiveTeamInfo={(activeTeam: TEAM) => setActiveTeam(activeTeam)}
+        />
       </div>
-      <div className=" ">
-        {mounted && (
-          <SideNavBottomSection
-            totalFiles={totalFiles}
-            onFileCreate={onFileCreate}
-          />
-        )}
+
+      <div className="shrink-0">
+        <SideNavBottomSection
+          totalFiles={totalFiles}
+          onFileCreate={onFileCreate}
+        />
       </div>
     </div>
   );
