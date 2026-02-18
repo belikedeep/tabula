@@ -31,9 +31,9 @@ const DashboardLayout = ({
     }
   };
   return (
-    <div>
+    <div className="min-h-screen bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]">
       <fileListContext.Provider value={{ fileList_, setFileList_ }}>
-        <div className="hidden md:block h-screen w-72 fixed">
+        <div className="hidden h-screen w-72 fixed md:block">
           <SideNav />
         </div>
         <div className="md:ml-72">{children}</div>
