@@ -44,7 +44,7 @@ const Dashboard = () => {
     }
   };
   return (
-    <div>
+    <div className="px-10 pt-20">
       <Header />
       <FileList />
     </div>

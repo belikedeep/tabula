@@ -1,7 +1,6 @@
 import { fileListContext } from "@/app/_context/fileListContext";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
+import { FileText, MoreHorizontal } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import RetroWindow from "@/app/_components/retro-window";
 
 export interface FILE {
   _id: string;
@@ -26,7 +26,7 @@ export interface FILE {
 const FileList = () => {
   const { fileList_ } = useContext(fileListContext);
   const [fileList, setFileList] = useState<FILE[]>([]);
-  const { user } = useKindeBrowserClient();
+  // const { user } = useKindeBrowserClient();
   const router = useRouter();
 
   useEffect(() => {
@@ -35,79 +35,53 @@ const FileList = () => {
 
   return (
     <div className="mt-10">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-          <thead className="ltr:text-left rtl:text-right">
-            <tr>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                File Name
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created At
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Created By
-              </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Author
-              </th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-gray-200">
-            {fileList &&
-              fileList.map((file: FILE, index: number) => (
-                <tr
-                  key={index}
-                  className="odd:bg-gray-50 cursor-pointer hover:bg-gray-100"
-                  onClick={() => router.push(`/workspace/${file._id}`)}
-                >
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    {file.fileName}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {new Date(file._creationTime).toLocaleDateString()}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {file.createdBy}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {/* Placeholder for user image if available, or just email/name again */}
-                    {user?.picture ? (
-                      <Image
-                        src={user?.picture}
-                        alt="user"
-                        className="w-8 h-8 rounded-full"
-                        width={30}
-                        height={30}
-                      />
-                    ) : (
-                      <Image
-                        src="/user.png"
-                        alt="user"
-                        className="w-8 h-8 rounded-full"
-                        width={30}
-                        height={30}
-                      />
-                    )}
-                  </td>
-                  <td>
+      <RetroWindow title="DIR: /ENGINEERING GROUP" className="min-h-[500px]">
+        <div className="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {!fileList || fileList.length === 0 ? (
+            <div className="col-span-full text-center py-10 text-gray-500 font-mono">
+              [EMPTY DIRECTORY]
+            </div>
+          ) : (
+            fileList.map((file: FILE, index: number) => (
+              <div
+                key={index}
+                className="border-2 border-black p-4 shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)] transition-all cursor-pointer bg-white relative group"
+                onClick={() => router.push(`/workspace/${file._id}`)}
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <FileText className="h-8 w-8 text-blue-300 stroke-[1.5]" />
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-gray-400">
+                      {new Date(file._creationTime).toISOString().split("T")[0]}
+                    </span>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost">
-                          <MoreHorizontal />
+                        <Button
+                          variant="ghost"
+                          className="h-6 w-6 p-0 hover:bg-gray-200 rounded-none"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem>Archive</DropdownMenuItem>
+                      <DropdownMenuContent className="rounded-none border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+                        <DropdownMenuItem className="cursor-pointer font-mono text-xs hover:bg-red-100 focus:bg-red-100 text-red-600">
+                          Archive
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+                  </div>
+                </div>
+                <h3 className="font-bold font-sans text-lg mb-1 truncate">
+                  {file.fileName}
+                </h3>
+                <p className="font-mono text-[10px] uppercase text-gray-500">
+                  CREATED BY {file.createdBy}
+                </p>
+              </div>
+            ))
+          )}
+        </div>
+      </RetroWindow>
     </div>
   );
 };
