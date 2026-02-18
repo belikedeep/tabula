@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Flag } from "lucide-react";
+import { Archive, Flag, Github } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import constants from "@/app/_constants/Constants";
 import Constants from "@/app/_constants/Constants";
 import PricingDialog from "./pricingDialog";
 
@@ -29,21 +28,25 @@ const SideNavBottomSection = ({ onFileCreate, totalFiles }: any) => {
     {
       id: 2,
       name: "Github",
-      icon: Flag,
+      icon: Github,
       path: "",
     },
     {
       id: 3,
       name: "Archive",
-      icon: Flag,
+      icon: Archive,
       path: "",
     },
   ];
+
   return (
     <div className="p-5 flex flex-col gap-4">
       {menuList.map((menu, index) => (
-        <h2 key={index} className="flex gap-2 p-1 px-2 text-[14px]">
-          <menu.icon className="h-5 w-5" />
+        <h2
+          key={index}
+          className="group flex cursor-pointer items-center gap-2 border-2 border-transparent p-2 text-sm font-bold uppercase transition-all hover:border-foreground hover:bg-purple-100 hover:shadow-[2px_2px_0_0_var(--foreground)] active:translate-x-px active:translate-y-px active:shadow-none"
+        >
+          <menu.icon className="h-4 w-4 transition-transform group-hover:scale-110" />
           {menu.name}
         </h2>
       ))}
