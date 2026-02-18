@@ -58,6 +58,12 @@ const SideNavTopSection = ({ user, setActiveTeamInfo }: any) => {
 
   return (
     <div className="space-y-4 p-5">
+      <div className="flex items-center gap-2 px-3 pb-2">
+        <h1 className="text-xl font-black tracking-tighter uppercase select-none">
+          Tabula
+        </h1>
+      </div>
+
       <Popover>
         <PopoverTrigger asChild>
           <div className="flex cursor-pointer items-center justify-between gap-2 border-2 border-foreground bg-background p-3 transition-all hover:bg-yellow-300 hover:shadow-[4px_4px_0_0_var(--foreground)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
