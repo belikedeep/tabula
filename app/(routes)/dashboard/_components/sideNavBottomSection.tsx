@@ -25,7 +25,7 @@ const SideNavBottomSection = ({ onFileCreate, totalFiles }: any) => {
         {/* New File Button */}
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="w-full rounded-none border-2 border-foreground bg-foreground text-background hover:bg-foreground/90 hover:shadow-[3px_3px_0_0_#94a3b8] transition-all active:translate-x-px active:translate-y-px active:shadow-none">
+            <Button id="new-file-btn" className="w-full rounded-none border-2 border-foreground bg-foreground text-background hover:bg-foreground/90 hover:shadow-[3px_3px_0_0_#94a3b8] transition-all active:translate-x-px active:translate-y-px active:shadow-none">
               <FilePlus className="mr-2 h-4 w-4" />
               <span className="font-bold uppercase tracking-wide text-xs">
                 New File

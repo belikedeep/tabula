@@ -15,7 +15,10 @@ export const Header = () => {
         />
       </div>
       <div>
-        <Button className="bg-black text-white hover:bg-gray-800 rounded-none h-10 px-6 shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-mono text-sm border-2 border-black uppercase">
+        <Button 
+          onClick={() => document.getElementById('new-file-btn')?.click()}
+          className="bg-black text-white hover:bg-gray-800 rounded-none h-10 px-6 shadow-[4px_4px_0_0_rgba(0,0,0,1)] font-mono text-sm border-2 border-black uppercase"
+        >
           + New File
         </Button>
       </div>
