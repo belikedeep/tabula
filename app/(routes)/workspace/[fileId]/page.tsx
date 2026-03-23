@@ -7,6 +7,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useConvex } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { FILE } from "../../dashboard/_components/fileList";
+import RetroWindow from "@/app/_components/retro-window";
 const Canvas = dynamic(() => import("../_components/canvas"), {
   ssr: false,
 });
@@ -33,29 +34,35 @@ const WorkspacePage = ({
   };
 
   return (
-    <div>
-      <WorkspaceHeader onSave={() => setTriggerSave(!triggerSave)} />
+    <div className="min-h-screen bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] flex flex-col">
+      <WorkspaceHeader onSave={() => setTriggerSave(!triggerSave)} fileName={fileData?.fileName} />
 
       {/* layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 flex-1 min-h-0">
         {/* document */}
-        <div className="h-screen">
+        <div className="h-full min-h-0">
           {fileData && (
-            <Editor
-              onSaveTrigger={triggerSave}
-              fileId={fileId}
-              fileData={fileData}
-            />
+            <RetroWindow title="DOCUMENT" className="h-full w-full">
+              <div className="h-full overflow-y-auto bg-white p-4">
+                <Editor
+                  onSaveTrigger={triggerSave}
+                  fileId={fileId}
+                  fileData={fileData}
+                />
+              </div>
+            </RetroWindow>
           )}
         </div>
         {/* canvas */}
-        <div className=" h-screen">
+        <div className="h-full min-h-0">
           {fileData && (
-            <Canvas
-              onSaveTrigger={triggerSave}
-              fileId={fileId}
-              fileData={fileData}
-            />
+            <RetroWindow title="WHITEBOARD" className="h-full w-full">
+              <Canvas
+                onSaveTrigger={triggerSave}
+                fileId={fileId}
+                fileData={fileData}
+              />
+            </RetroWindow>
           )}
         </div>
       </div>
